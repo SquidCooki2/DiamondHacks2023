@@ -100,6 +100,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 }
                                 if (commaCount == 5) {
                                     zip = csvAddress.substring(posLastComma + 1);
+                                    break;
                                 }
                             }
                         }
