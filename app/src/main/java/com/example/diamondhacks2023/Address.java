@@ -2,11 +2,13 @@ package com.example.diamondhacks2023;
 
 public class Address {
     String street = "";
-    String county = "";
+    String city = "";
+    String stateName = "";
     String zip = "";
-    public Address(String s, String c, String z){
+    public Address(String s, String c, String stAbbrev, String z){
         street = s;
-        county = c;
+        city = c;
+        stateName = stAbbrev;
         zip = z;
     }
 

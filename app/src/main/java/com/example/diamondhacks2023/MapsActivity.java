@@ -52,12 +52,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
     public void sortAddress() throws FileNotFoundException{
+        ArrayList <Address> VotingPlacesInCity = new ArrayList<Address>();
         File places = new File("VotingPlaces.txt");
         Scanner sc = new Scanner(places);
         String street = "";
         String zip = "";
-        String county = "";
-        String address = "";
+        String city = "";
+        String state = "";
+        String csvAddress = "";
         while (sc.hasNextLine()){
             String fullLine = sc.nextLine();
             if (fullLine.indexOf("WAKE") == (fullLine.indexOf(",")+1)){
@@ -74,7 +76,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                     counter++;
                                 }
                                 if (counter == 5){
-                                    address = fullLine.substring(j+1);
+                                    csvAddress = fullLine.substring(j+1);
+                                    int commaCount = 0;
+                                    int posLastComma = 0;
+                                    for (int k = 0; k < csvAddress.length(); k++){
+                                        if (csvAddress.charAt(k) == ','){
+                                            commaCount++;
+                                        }
+                                        if (commaCount == 2){
+                                            street = csvAddress.substring(0,k);
+                                            posLastComma = k;
+                                        }
+                                        if (commaCount == 3){
+                                            city = csvAddress.substring(posLastComma+1,k);
+                                            posLastComma = k;
+                                        }
+                                        if (commaCount == 4){
+                                            state = csvAddress.substring(posLastComma+1,k);
+                                            posLastComma = k;
+                                        }
+                                        if (commaCount == 5){
+                                            zip = csvAddress.substring(posLastComma+1);
+                                        }
+                                    }
                                     break;
                                 }
                             }
@@ -83,5 +107,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             }
         }
+        Address address = new Address(street,city,state,zip);
+        VotingPlacesInCity.add(address);
     }
 }
