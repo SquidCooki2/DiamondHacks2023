@@ -11,6 +11,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.diamondhacks2023.databinding.ActivityMapsBinding;
+import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -47,5 +50,38 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+    }
+    public void sortAddress() throws FileNotFoundException{
+        File places = new File("VotingPlaces.txt");
+        Scanner sc = new Scanner(places);
+        String street = "";
+        String zip = "";
+        String county = "";
+        String address = "";
+        while (sc.hasNextLine()){
+            String fullLine = sc.nextLine();
+            if (fullLine.indexOf("WAKE") == (fullLine.indexOf(",")+1)){
+                int count = 0;
+                for (int i = 0; i < fullLine.length(); i++){
+                    if (fullLine.charAt(i) == ','){
+                        count++;
+                    }
+                    if (count == 7){
+                        if (fullLine.lastIndexOf("RALEIGH") == (i+1)){
+                            int counter = 0;
+                            for (int j = 0; j < fullLine.length(); j++){
+                                if (fullLine.charAt(j) == ','){
+                                    counter++;
+                                }
+                                if (counter == 5){
+                                    address = fullLine.substring(j+1);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
