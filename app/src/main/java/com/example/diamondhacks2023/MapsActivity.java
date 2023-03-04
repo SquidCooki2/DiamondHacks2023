@@ -71,35 +71,35 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     if (count == 7){
                         if (fullLine.lastIndexOf("RALEIGH") == (i+1)){
                             int counter = 0;
-                            for (int j = 0; j < fullLine.length(); j++){
-                                if (fullLine.charAt(j) == ','){
+                            for (int j = 0; j < fullLine.length(); j++) {
+                                if (fullLine.charAt(j) == ',') {
                                     counter++;
                                 }
-                                if (counter == 5){
-                                    csvAddress = fullLine.substring(j+1);
-                                    int commaCount = 0;
-                                    int posLastComma = 0;
-                                    for (int k = 0; k < csvAddress.length(); k++){
-                                        if (csvAddress.charAt(k) == ','){
-                                            commaCount++;
-                                        }
-                                        if (commaCount == 2){
-                                            street = csvAddress.substring(0,k);
-                                            posLastComma = k;
-                                        }
-                                        if (commaCount == 3){
-                                            city = csvAddress.substring(posLastComma+1,k);
-                                            posLastComma = k;
-                                        }
-                                        if (commaCount == 4){
-                                            state = csvAddress.substring(posLastComma+1,k);
-                                            posLastComma = k;
-                                        }
-                                        if (commaCount == 5){
-                                            zip = csvAddress.substring(posLastComma+1);
-                                        }
-                                    }
-                                    break;
+                                if (counter == 5) {
+                                    csvAddress = fullLine.substring(j + 1);
+                                }
+                                break;
+                            }
+                            int commaCount = 0;
+                            int posLastComma = 0;
+                            for (int k = 0; k < csvAddress.length(); k++){
+                                if (csvAddress.charAt(k) == ','){
+                                    commaCount++;
+                                }
+                                if (commaCount == 2){
+                                    street = csvAddress.substring(0,k);
+                                    posLastComma = k;
+                                }
+                                if (commaCount == 3){
+                                    city = csvAddress.substring(posLastComma+1,k);
+                                    posLastComma = k;
+                                }
+                                if (commaCount == 4){
+                                    state = csvAddress.substring(posLastComma+1,k);
+                                    posLastComma = k;
+                                }
+                                if (commaCount == 5) {
+                                    zip = csvAddress.substring(posLastComma + 1);
                                 }
                             }
                         }
