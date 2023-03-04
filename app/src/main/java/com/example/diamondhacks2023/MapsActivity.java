@@ -60,16 +60,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String city = "";
         String state = "";
         String csvAddress = "";
-        while (sc.hasNextLine()){
+        while (sc.hasNextLine()) {
             String fullLine = sc.nextLine();
-            if (fullLine.indexOf("WAKE") == (fullLine.indexOf(",")+1)){
+            if (fullLine.indexOf("WAKE") == (fullLine.indexOf(",") + 1)) {
                 int count = 0;
-                for (int i = 0; i < fullLine.length(); i++){
-                    if (fullLine.charAt(i) == ','){
+                for (int i = 0; i < fullLine.length(); i++) {
+                    if (fullLine.charAt(i) == ',') {
                         count++;
                     }
-                    if (count == 7){
-                        if (fullLine.lastIndexOf("RALEIGH") == (i+1)){
+                    if (count == 7) {
+                        if (fullLine.lastIndexOf("RALEIGH") == (i + 1)) {
                             int counter = 0;
                             for (int j = 0; j < fullLine.length(); j++) {
                                 if (fullLine.charAt(j) == ',') {
@@ -80,35 +80,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 }
                                 break;
                             }
-                            int commaCount = 0;
-                            int posLastComma = 0;
-                            for (int k = 0; k < csvAddress.length(); k++){
-                                if (csvAddress.charAt(k) == ','){
-                                    commaCount++;
-                                }
-                                if (commaCount == 2){
-                                    street = csvAddress.substring(0,k);
-                                    posLastComma = k;
-                                }
-                                if (commaCount == 3){
-                                    city = csvAddress.substring(posLastComma+1,k);
-                                    posLastComma = k;
-                                }
-                                if (commaCount == 4){
-                                    state = csvAddress.substring(posLastComma+1,k);
-                                    posLastComma = k;
-                                }
-                                if (commaCount == 5) {
-                                    zip = csvAddress.substring(posLastComma + 1);
-                                    break;
-                                }
-                            }
+                            String[] stringArray = csvAddress.split(",");
+                            street = stringArray[0] + " " + stringArray[1];
+                            zip = stringArray[4];
+                            city = stringArray[2];
+                            state = stringArray[3];
+                            Address address = new Address(street,city,state,zip);
+                            VotingPlacesInCity.add(address);
                         }
                     }
                 }
             }
         }
-        Address address = new Address(street,city,state,zip);
-        VotingPlacesInCity.add(address);
     }
 }
